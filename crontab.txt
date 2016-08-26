@@ -1,0 +1,1 @@
+*/20 * * * * cd byteball-faucet; node check_daemon.js 1>>~/.config/byteball-faucet/check_daemon.log 2>>~/.config/byteball-faucet/check_daemon.err
