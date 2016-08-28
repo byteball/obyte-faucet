@@ -93,17 +93,29 @@ eventBus.on('text', function(from_address, text){
 	var address = arrMatches[0];
 	if (!ValidationUtils.isValidAddress(address))
 		return sendMessageToDevice(from_address, 'Please send a valid address');
+	var bBlackbytes = /(black|private)/i.test(text);
+	var asset = bBlackbytes ? 'JY4RvlUGv0qWItikizmNOIjIYZeEciODOog8AzLju50=' : null;
 	db.query(
-		"SELECT amount FROM faucet_payouts WHERE device_address=? AND creation_date > "+db.addTime("-1 DAY")+" LIMIT 1", 
+		"SELECT amount FROM faucet_payouts \n\
+		WHERE device_address=? AND asset"+(bBlackbytes ? ("="+db.escape(asset)) : " IS NULL")+" AND creation_date > "+db.addTime("-1 DAY")+" LIMIT 1", 
 		[from_address], 
 		function(rows){
-			if (rows.length > 0)
-				return sendMessageToDevice(from_address, "You can request free bytes only once per 24 hours.  I've already sent you "+rows[0].amount+" bytes");
-			var amount = getRandomInt(conf.MIN_AMOUNT_IN_KB, conf.MAX_AMOUNT_IN_KB) * 1000;
-			headlessWallet.issueChangeAddressAndSendPayment(amount, address, from_address, function(err){
+			if (rows.length > 0){
+				var currency = bBlackbytes ? 'blackbytes' : 'bytes';
+				return sendMessageToDevice(from_address, "You can request free "+currency+" only once per 24 hours.  I've already sent you "+rows[0].amount+" "+currency);
+			}
+			var amount = bBlackbytes 
+				? getRandomInt(conf.MIN_AMOUNT_IN_KB * 1000, conf.MAX_AMOUNT_IN_KB * 1000)
+				: getRandomInt(conf.MIN_AMOUNT_IN_KB, conf.MAX_AMOUNT_IN_KB) * 1000;
+			headlessWallet.issueChangeAddressAndSendPayment(asset, amount, address, from_address, function(err){
 				if (err)
 					return notifyAdminAboutFailedPayment(err);
-				db.query("INSERT INTO faucet_payouts (device_address, amount, address) VALUES(?,?,?)", [from_address, amount, address], function(){});
+				db.query(
+					"INSERT INTO faucet_payouts (device_address, amount, address, asset) VALUES(?,?,?,?)", 
+					[from_address, amount, address, asset]
+				);
+				if (!bBlackbytes)
+					sendMessageToDevice(from_address, 'If you\'d like to also receive free blackbytes, type "blackbytes to YOURADDRESS"');
 			});
 		}
 	);
