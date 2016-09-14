@@ -120,3 +120,5 @@ eventBus.on('text', function(from_address, text){
 		}
 	);
 });
+
+module.exports = headlessWallet;
