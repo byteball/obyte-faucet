@@ -104,6 +104,8 @@ eventBus.on('text', function(from_address, text){
 				var currency = bBlackbytes ? 'blackbytes' : 'bytes';
 				return sendMessageToDevice(from_address, "You can request free "+currency+" only once per 24 hours.  I've already sent you "+rows[0].amount+" "+currency);
 			}
+			if (bBlackbytes)
+				sendMessageToDevice(from_address, "Please wait ...");
 			var amount = bBlackbytes 
 				? getRandomInt(conf.MIN_AMOUNT_IN_KB * 1000, conf.MAX_AMOUNT_IN_KB * 1000)
 				: getRandomInt(conf.MIN_AMOUNT_IN_KB, conf.MAX_AMOUNT_IN_KB) * 1000;
