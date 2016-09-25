@@ -1,5 +1,6 @@
 /*jslint node: true */
 "use strict";
+var constants = require('byteballcore/constants.js');
 var conf = require('byteballcore/conf.js');
 var db = require('byteballcore/db.js');
 var eventBus = require('byteballcore/event_bus.js');
@@ -94,7 +95,7 @@ eventBus.on('text', function(from_address, text){
 	if (!ValidationUtils.isValidAddress(address))
 		return sendMessageToDevice(from_address, 'Please send a valid address');
 	var bBlackbytes = /(black|private)/i.test(text);
-	var asset = bBlackbytes ? 'JY4RvlUGv0qWItikizmNOIjIYZeEciODOog8AzLju50=' : null;
+	var asset = bBlackbytes ? constants.BLACKBYTES_ASSET : null;
 	db.query(
 		"SELECT amount FROM faucet_payouts \n\
 		WHERE device_address=? AND asset"+(bBlackbytes ? ("="+db.escape(asset)) : " IS NULL")+" AND creation_date > "+db.addTime("-1 DAY")+" LIMIT 1", 
