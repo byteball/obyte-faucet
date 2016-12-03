@@ -13,10 +13,17 @@ const objAsset = {is_private: true, fixed_denominations: true};
 
 function readAddresses(handleAddresses){
 	db.query(
-		"SELECT address FROM my_addresses JOIN outputs USING(address) WHERE asset=? AND is_spent=0",
+		"SELECT DISTINCT address FROM my_addresses JOIN outputs USING(address) WHERE asset=? AND is_spent=0",
 		[asset],
 		function(rows){
-			handleAddresses(rows.map(function(row){ return row.address; }));
+			var arrAddresses = rows.map(function(row){ return row.address; });
+			db.query(
+				"SELECT address FROM my_addresses JOIN outputs USING(address) WHERE asset IS NULL AND is_spent=0 ORDER BY amount DESC LIMIT 1",
+				function(rows){
+					arrAddresses.push(rows[0].address);
+					handleAddresses(arrAddresses);
+				}
+			);
 		}
 	);
 }
