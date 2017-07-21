@@ -24,7 +24,7 @@ function notifyAdmin(subject, body){
 
 function notifyAdminAboutFailedPayment(err){
 	console.log('payment failed: '+err);
-	notifyAdmin('payment failed: '+err, err);
+//	notifyAdmin('payment failed: '+err, err);
 }
 
 function getRandomInt(min, max) {
