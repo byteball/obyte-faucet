@@ -88,6 +88,8 @@ eventBus.on('text', function(from_address, text){
 		headlessWallet.handleText(from_address, text);
 	resumeSession(from_address);
 	text = text.trim();
+	if (text.match(/unrecognized/i))
+		return console.log("ignoring: "+text);
 	var arrMatches = text.match(/\b[A-Z2-7]{32}\b/);
 	if (!arrMatches)
 		return sendUnrecognizedCommandOrGreeting(from_address);
