@@ -1,13 +1,21 @@
 /*jslint node: true */
 "use strict";
-var constants = require('byteballcore/constants.js');
-var conf = require('byteballcore/conf.js');
-var db = require('byteballcore/db.js');
-var eventBus = require('byteballcore/event_bus.js');
-var mail = require('byteballcore/mail.js');
-var headlessWallet = require('headless-byteball');
-var desktopApp = require('byteballcore/desktop_app.js');
-var ValidationUtils = require("byteballcore/validation_utils.js");
+var fs = require('fs');
+var desktopApp = require('ocore/desktop_app.js');
+var appDataDir = desktopApp.getAppDataDir();
+var path = require('path');
+
+if (require.main === module && !fs.existsSync(appDataDir) && fs.existsSync(path.dirname(appDataDir)+'/byteball-faucet')){
+	console.log('=== will rename old faucet data dir');
+	fs.renameSync(path.dirname(appDataDir)+'/byteball-faucet', appDataDir);
+}
+var constants = require('ocore/constants.js');
+var conf = require('ocore/conf.js');
+var db = require('ocore/db.js');
+var eventBus = require('ocore/event_bus.js');
+var mail = require('ocore/mail.js');
+var headlessWallet = require('headless-obyte');
+var ValidationUtils = require("ocore/validation_utils.js");
 
 const GREETING_TIMEOUT = 300*1000;
 const SESSION_TIMEOUT = 600*1000;
@@ -47,7 +55,7 @@ function purgeOldSessions(){
 setInterval(purgeOldSessions, SESSION_TIMEOUT);
 
 function sendMessageToDevice(device_address, text){
-	var device = require('byteballcore/device.js');
+	var device = require('ocore/device.js');
 	device.sendMessageToDevice(device_address, 'text', text);
 //	assocSessions[device_address].ts = Date.now();
 }

@@ -1,27 +1,28 @@
 {
-  "name": "byteball-faucet",
-  "description": "Byteball faucet",
-  "author": "Byteball",
+  "name": "obyte-faucet",
+  "description": "Obyte faucet",
+  "author": "Obyte",
   "version": "0.1.1",
   "main": "start.js",
   "keywords": [
     "faucet",
+    "obyte",
     "byteball"
   ],
   "license": "MIT",
   "repository": {
-    "url": "git://github.com/byteball/byteball-faucet.git",
+    "url": "git://github.com/byteball/obyte-faucet.git",
     "type": "git"
   },
   "bugs": {
-    "url": "https://github.com/byteball/byteball-faucet/issues"
+    "url": "https://github.com/byteball/obyte-faucet/issues"
   },
   "browser": {
     "request": "browser-request",
     "secp256k1": "secp256k1/js"
   },
   "dependencies": {
-    "byteballcore": "git+https://github.com/byteball/byteballcore.git",
-    "headless-byteball": "git+https://github.com/byteball/headless-byteball.git"
+    "ocore": "git+https://github.com/byteball/ocore.git",
+    "headless-obyte": "git+https://github.com/byteball/headless-obyte.git"
   }
 }

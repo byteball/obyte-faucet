@@ -1,11 +1,11 @@
 /*jslint node: true */
 "use strict";
-var _ = require('byteballcore/node_modules/lodash');
+var _ = require('ocore/node_modules/lodash');
 var headlessWallet = require('./start.js');
-var eventBus = require('byteballcore/event_bus.js');
-var objectHash = require('byteballcore/object_hash.js');
-var db = require('byteballcore/db.js');
-var storage = require('byteballcore/storage.js');
+var eventBus = require('ocore/event_bus.js');
+var objectHash = require('ocore/object_hash.js');
+var db = require('ocore/db.js');
+var storage = require('ocore/storage.js');
 
 const asset = 'JY4RvlUGv0qWItikizmNOIjIYZeEciODOog8AzLju50=';
 
@@ -14,9 +14,9 @@ function onError(err){
 }
 
 function splitOutputOnAddresses(objAsset, arrAddresses){
-	var composer = require('byteballcore/composer.js');
-	var network = require('byteballcore/network.js');
-	var indivisibleAsset = require('byteballcore/indivisible_asset.js');
+	var composer = require('ocore/composer.js');
+	var network = require('ocore/network.js');
+	var indivisibleAsset = require('ocore/indivisible_asset.js');
 	
 	function createOutputs(address, amount_to_use, change_amount){
 		var output = {
