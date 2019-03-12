@@ -61,7 +61,7 @@ function sendMessageToDevice(device_address, text){
 }
 
 function sendGreeting(device_address){
-	sendMessageToDevice(device_address, 'To receive free bytes, let me know your Byteball address (use "Insert My Address" button)');
+	sendMessageToDevice(device_address, 'To receive free bytes, let me know your Obyte address (use "Insert My Address" button)');
 	assocSessions[device_address].greeting_ts = Date.now();
 }
 
