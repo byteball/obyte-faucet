@@ -10,7 +10,7 @@ exports.bIgnoreUnpairRequests = true;
 exports.storage = 'sqlite';
 
 
-exports.hub = 'byteball.org/bb';
+exports.hub = process.env.testnet ? 'obyte.org/bb-test' : 'obyte.org/bb';
 exports.deviceName = 'Faucet';
 exports.permanent_pairing_secret = '0000';
 exports.control_addresses = ['DEVICE ALLOWED TO CHAT'];
