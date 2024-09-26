@@ -21,7 +21,9 @@ exports.MAX_AMOUNT_IN_KB = 1e6;
 
 exports.bStaticChangeAddress = true;
 exports.MAX_UNSPENT_OUTPUTS = 1;
-exports.CONSOLIDATION_INTERVAL = 3600*1000;
+exports.CONSOLIDATION_INTERVAL = 3600 * 1000;
+
+exports.spend_unconfirmed = 'all';
 
 exports.KEYS_FILENAME = 'keys.json';
 
